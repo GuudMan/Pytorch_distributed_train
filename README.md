@@ -9,20 +9,35 @@ hfl/chinese-macbert-base
 
 # 使用
 第一类cpu: pytorch train_cpu.py
+
 第二类DataParallel: python train_multi_gpu_data_parallel.py
+
 第三类DistributedDataParallel: 
-两种训练方式：
+
+第三类有两种启动训练的方式：
+
 运行命令1：
+
 python -m torch.distributed.launch --nproc_per_node=2 train_distributed_data_parallel.py
+
 需要从参数传递中读取local_ran
+
 import argparse
+
 parse = argparse.ArgumentParser()
+
 parse.add_argument('--local-rank', help="local device on current node", type=int)
+
 args = parse.parse_args()
+
 local_rank = args.local_rank
 
+
 命令2：
+
 torchrun --standalone --nproc_per_node=2 train_distributed_data_parallel.py
+
 需要从环境变量中读取
+
 local_rank = int(os.environ["LOCAL_RANK"])
 
